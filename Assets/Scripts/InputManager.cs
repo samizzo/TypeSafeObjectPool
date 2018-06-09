@@ -9,6 +9,9 @@ public class InputManager : MonoBehaviour
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            SpawnExplosion(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f));
+
         if (Input.GetMouseButtonDown(0))
             SpawnExplosion(Input.mousePosition);
 
