@@ -14,6 +14,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     [Tooltip("Size of this object pool")]
     public int m_size;
 
+    // The list of free and used objects for tracking.
     private List<T> m_freeList;
     private List<T> m_usedList;
 
