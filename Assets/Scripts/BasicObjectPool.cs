@@ -25,7 +25,7 @@ public class BasicObjectPool : MonoBehaviour
     /// <summary>
     /// Returns an object from the pool. Returns null if there are no more objects free in the pool.
     /// </summary>
-    /// <returns>Object of type T from the pool.</returns>
+    /// <returns>GameObject from the pool.</returns>
     public GameObject Get()
     {
         if (transform.childCount == 0)
@@ -35,12 +35,12 @@ public class BasicObjectPool : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns an object to the pool. The object must have been created by this ObjectPool.
+    /// Returns an object to the pool.
     /// </summary>
     /// <param name="pooledObject">Object previously obtained from this ObjectPool</param>
     public void ReturnObject(GameObject pooledObject)
     {
-        // Reparent the pooled object to us, and disable it.
+        // Reparent the pooled object to us and disable it.
         var pooledObjectTransform = pooledObject.transform;
         pooledObjectTransform.parent = transform;
         pooledObjectTransform.localPosition = Vector3.zero;
