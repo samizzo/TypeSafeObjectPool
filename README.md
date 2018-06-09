@@ -11,3 +11,6 @@ from the pool.
 
 To see an example of a non-type safe object pool, load the `BasicObjectPool`
 scene.
+
+The type-safe generic object pool is `ObjectPool`. The non-type safe version
+is `BasicObjectPool`.
