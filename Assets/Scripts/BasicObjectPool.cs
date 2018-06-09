@@ -12,20 +12,13 @@ public class BasicObjectPool : MonoBehaviour
     [Tooltip("Size of this object pool")]
     public int m_size;
 
-    private List<GameObject> m_freeList;
-    private List<GameObject> m_usedList;
-
     public void Awake()
     {
-        m_freeList = new List<GameObject>(m_size);
-        m_usedList = new List<GameObject>(m_size);
-
         // Instantiate the pooled objects and disable them.
         for (var i = 0; i < m_size; i++)
         {
             var pooledObject = Instantiate(m_prefab, transform);
             pooledObject.gameObject.SetActive(false);
-            m_freeList.Add(pooledObject);
         }
     }
 
@@ -35,15 +28,10 @@ public class BasicObjectPool : MonoBehaviour
     /// <returns>Object of type T from the pool.</returns>
     public GameObject Get()
     {
-        var numFree = m_freeList.Count;
-        if (numFree == 0)
+        if (transform.childCount == 0)
             return null;
 
-        // Pull an object from the end of the free list.
-        var pooledObject = m_freeList[numFree - 1];
-        m_freeList.RemoveAt(numFree - 1);
-        m_usedList.Add(pooledObject);
-        return pooledObject;
+        return transform.GetChild(0).gameObject;
     }
 
     /// <summary>
@@ -52,12 +40,6 @@ public class BasicObjectPool : MonoBehaviour
     /// <param name="pooledObject">Object previously obtained from this ObjectPool</param>
     public void ReturnObject(GameObject pooledObject)
     {
-        Debug.Assert(m_usedList.Contains(pooledObject));
-
-        // Put the pooled object back in the free list.
-        m_usedList.Remove(pooledObject);
-        m_freeList.Add(pooledObject);
-
         // Reparent the pooled object to us, and disable it.
         var pooledObjectTransform = pooledObject.transform;
         pooledObjectTransform.parent = transform;
